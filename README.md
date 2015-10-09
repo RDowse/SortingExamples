@@ -1,2 +1,2 @@
 # SortingExamples
-Standard sorting algorithms shown in Python
+Reference sorting algorithms shown in Python
