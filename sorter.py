@@ -35,7 +35,6 @@ def bubblesort(unsorted, comparisons, swaps):
 				temp = unsorted[i]
 				unsorted[i] = unsorted[i+1]
 				unsorted[i+1] = temp
-	print "Bubble Sort Complete"
 	return unsorted
 
 def insertsort(unsorted, comparisons, swaps):
@@ -49,7 +48,6 @@ def insertsort(unsorted, comparisons, swaps):
 			unsorted[j-1] = unsorted[j]
 			unsorted[j] = temp
 			j = j -1
-	print "Insertion Sort Complete"
 	return unsorted
 	#Currently Swaps is literal swaps rather than conceptual insertion
 
@@ -58,14 +56,15 @@ def mergesort(unsorted, comparisons, swaps):
 		mid = len(unsorted)//2
 		lefthalf = unsorted[:mid]
 		righthalf = unsorted[mid:]
-
 		#Recursive Calls of Left and Right Halves
 		mergesort(lefthalf, comparisons, swaps)
 		mergesort(righthalf, comparisons, swaps)
 
+		#Variable Initialisation
 		i=0
 		j=0
 		k=0
+
 
 		while i < len(lefthalf) and j < len(righthalf):
 			if lefthalf[i] < righthalf[j]:
@@ -81,14 +80,12 @@ def mergesort(unsorted, comparisons, swaps):
 			k=k+1
 
 		while i < len(lefthalf):
-			comparisons.inc()
 			swaps.inc() 
 			unsorted[k]=lefthalf[i]
 			i=i+1
 			k=k+1
 
 		while j < len(righthalf):
-			comparisons.inc() 
 			swaps.inc() 
 			unsorted[k]=righthalf[j]
 			j=j+1
@@ -121,8 +118,7 @@ def quicksort(unsorted, comparisons, swaps):
 	else:
 		return unsorted
 
-	print "Quick Sort Incomplete"
-	return 0
+	
 
 def heapsort(unsorted, comparisons, swaps):
 	print "Heap Sort Incomplete"
@@ -232,24 +228,31 @@ while algchoice ==0:
 	if algchoice == 1:
 		print "\nBubble Sort Selected"
 		sorted_items = bubblesort(unsortedlist,comparisons, swaps)
+		print "Bubble Sort Complete"
 	elif algchoice == 2:
 		print "\nInsertion Sort Selected"
 		sorted_items = insertsort(unsortedlist,comparisons, swaps)
+		print "Insertion Sort Complete"
 	elif algchoice == 3:
 		print "\nMerge Sort Selected"
 		sorted_items = mergesort(unsortedlist,comparisons, swaps)
+		print "Quick Sort Complete"
 	elif algchoice == 4:
 		print "\nQuick Sort Selected"
 		sorted_items = quicksort(unsortedlist,comparisons, swaps)
+		print "Quick Sort Complete"
 	elif algchoice == 5:
 		print "\nHeap Sort Selected"
 		sorted_items = heapsort(unsortedlist,comparisons, swaps)
+		print "Heap Sort Complete"
 	elif algchoice == 6:
 		print "\nSelection Sort Selected"
 		sorted_items = selectionsort(unsortedlist,comparisons, swaps)
+		print "Selection Sort Complete"
 	elif algchoice == 7:
 		print "\nTimSort Selected"
 		sorted_items = timsort(unsortedlist,comparisons, swaps)
+		print "TimSort Complete"
 	else:
 		print "\nInvalid Algorithm Choice"
 		algchoice = 0
