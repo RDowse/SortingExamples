@@ -27,39 +27,114 @@ class counterobject:
 #FUNCTION DEFINITIONS
 
 def bubblesort(unsorted, comparisons, swaps):
-	sortedlist = []
-
-	for element in unsorted:
-		sortedlist.append(element)	#Maintains unsorted array
-
-	for number in range(len(sortedlist)-1, 0 ,-1):	
+	for number in range(len(unsorted)-1, 0 ,-1):	
 		for i in range(number):
 			comparisons.inc()
-			if sortedlist[i]>sortedlist[i+1]:
+			if unsorted[i]>unsorted[i+1]:
 				swaps.inc()
-				temp = sortedlist[i]
-				sortedlist[i] = sortedlist[i+1]
-				sortedlist[i+1] = temp
+				temp = unsorted[i]
+				unsorted[i] = unsorted[i+1]
+				unsorted[i+1] = temp
 	print "Bubble Sort Complete"
-	return sortedlist
+	return unsorted
 
 def insertsort(unsorted, comparisons, swaps):
+	for i in range(0, len(unsorted)-1,1):
+		j = i
+		#Looking down the list rather than up, works better assuming partially organised
+		while j > 0 and unsorted[j-1] > unsorted[j]:  
+			comparisons.inc()
+			swaps.inc() 
+			temp = unsorted[j-1]
+			unsorted[j-1] = unsorted[j]
+			unsorted[j] = temp
+			j = j -1
 	print "Insertion Sort Complete"
+	return unsorted
+	#Currently Swaps is literal swaps rather than conceptual insertion
 
 def mergesort(unsorted, comparisons, swaps):
-	print "Merge Sort Complete"
+	if len(unsorted)>1:
+		mid = len(unsorted)//2
+		lefthalf = unsorted[:mid]
+		righthalf = unsorted[mid:]
+
+		#Recursive Calls of Left and Right Halves
+		mergesort(lefthalf, comparisons, swaps)
+		mergesort(righthalf, comparisons, swaps)
+
+		i=0
+		j=0
+		k=0
+
+		while i < len(lefthalf) and j < len(righthalf):
+			if lefthalf[i] < righthalf[j]:
+				comparisons.inc()
+				swaps.inc() 
+				unsorted[k]=lefthalf[i]
+				i=i+1
+			else:
+				comparisons.inc()
+				swaps.inc() 
+				unsorted[k]=righthalf[j]
+				j=j+1
+			k=k+1
+
+		while i < len(lefthalf):
+			comparisons.inc()
+			swaps.inc() 
+			unsorted[k]=lefthalf[i]
+			i=i+1
+			k=k+1
+
+		while j < len(righthalf):
+			comparisons.inc() 
+			swaps.inc() 
+			unsorted[k]=righthalf[j]
+			j=j+1
+			k=k+1
+
+	return unsorted
 
 def quicksort(unsorted, comparisons, swaps):
-	print "Quick Sort Complete"
+	
+	less = []
+	equal = []
+	greater = []
+	if len(unsorted) > 1:
+		pivot = unsorted[0]	#Could be a random pivot
+		for x in unsorted:
+			comparisons.inc()
+			if x < pivot:
+				less.append(x)
+			if x == pivot:
+				comparisons.inc()
+				equal.append(x)
+			if x > pivot:
+				comparisons.inc()
+				comparisons.inc()
+				greater.append(x)
+			swaps.inc()
+		#Recursive Calls of Left and Right Halves
+		return quicksort(less, comparisons, swaps)+equal+quicksort(greater, comparisons, swaps)
+		#Swaps not incremented	 as otherwise would double count
+	else:
+		return unsorted
+
+	print "Quick Sort Incomplete"
+	return 0
 
 def heapsort(unsorted, comparisons, swaps):
-	print "Heap Sort Complete"
+	print "Heap Sort Incomplete"
+	return 0
 
 def selectionsort(unsorted, comparisons, swaps):
-	print "Selection Sort Complete"
+	print "Selection Sort Incomplete"
+	return 0
 
 def timsort(unsorted, comparisons, swaps):
-	print "TimSort Sort Complete"
+	print "TimSort Sort Incomplete"
+	return 0
 
 
 comparisons = counterobject()
@@ -150,40 +225,43 @@ while algchoice ==0:
 
 	algchoice = input()
 
+	unsortedlist = []
+	for element in random_items:
+		unsortedlist.append(element)	#Maintains unsorted array
+
 	if algchoice == 1:
 		print "\nBubble Sort Selected"
-		sorted_items = bubblesort(random_items,comparisons, swaps)
+		sorted_items = bubblesort(unsortedlist,comparisons, swaps)
 	elif algchoice == 2:
 		print "\nInsertion Sort Selected"
-		insertsort(random_items,comparisons, swaps)
+		sorted_items = insertsort(unsortedlist,comparisons, swaps)
 	elif algchoice == 3:
 		print "\nMerge Sort Selected"
-		mergesort(random_items,comparisons, swaps)
+		sorted_items = mergesort(unsortedlist,comparisons, swaps)
 	elif algchoice == 4:
 		print "\nQuick Sort Selected"
-		quicksort(random_items,comparisons, swaps)
+		sorted_items = quicksort(unsortedlist,comparisons, swaps)
 	elif algchoice == 5:
 		print "\nHeap Sort Selected"
-		heapsort(random_items,comparisons, swaps)
+		sorted_items = heapsort(unsortedlist,comparisons, swaps)
 	elif algchoice == 6:
 		print "\nSelection Sort Selected"
-		selectionsort(random_items,comparisons, swaps)
+		sorted_items = selectionsort(unsortedlist,comparisons, swaps)
 	elif algchoice == 7:
 		print "\nTimSort Selected"
-		timsort(random_items,comparisons, swaps)
+		sorted_items = timsort(unsortedlist,comparisons, swaps)
 	else:
 		print "\nInvalid Algorithm Choice"
-		algchoice=0
+		algchoice = 0
 
 
 
-
-
-print '\nUnsorted List:\n ',random_items
-print '\nSorted List:\n ',sorted_items #Change to Sorted List on Completion
+if outputchoice == 1:
+	print '\nUnsorted List:\n ',random_items
+	print '\nSorted List:\n ',sorted_items #Change to Sorted List on Completion
 print '\nSize of List: ',len(random_items)
 print '\nNumber of Comparisons: ',comparisons.val()
-print 'Number of Swaps: ',swaps.val()
+print 'Number of Array Modifications: ',swaps.val()
 
 if outputchoice == 2:
 	thisfile = open(outfile, 'w')
