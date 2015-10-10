@@ -13,6 +13,60 @@ print "                               |___/             |___/                   
 print "Code by Nick Robertson"
 print "https://github.com/nar213/SortingExamples"
 
+#CLASSES
+
+class counterobject:
+	counter = 0
+	def __init__(self):
+		self.counter = 0
+	def inc(self):
+		self.counter = self.counter + 1
+	def val(self):
+		return self.counter
+
+#FUNCTION DEFINITIONS
+
+def bubblesort(unsorted, comparisons, swaps):
+	sortedlist = []
+
+	for element in unsorted:
+		sortedlist.append(element)	#Maintains unsorted array
+
+	for number in range(len(sortedlist)-1, 0 ,-1):	
+		for i in range(number):
+			comparisons.inc()
+			if sortedlist[i]>sortedlist[i+1]:
+				swaps.inc()
+				temp = sortedlist[i]
+				sortedlist[i] = sortedlist[i+1]
+				sortedlist[i+1] = temp
+	print "Bubble Sort Complete"
+	return sortedlist
+
+def insertsort(unsorted, comparisons, swaps):
+	print "Insertion Sort Complete"
+
+def mergesort(unsorted, comparisons, swaps):
+	print "Merge Sort Complete"
+
+def quicksort(unsorted, comparisons, swaps):
+	print "Quick Sort Complete"
+
+def heapsort(unsorted, comparisons, swaps):
+	print "Heap Sort Complete"
+
+def selectionsort(unsorted, comparisons, swaps):
+	print "Selection Sort Complete"
+
+def timsort(unsorted, comparisons, swaps):
+	print "TimSort Sort Complete"
+
+
+comparisons = counterobject()
+swaps = counterobject()
+
+#USER INTERFACE
+
 inputchoice =0
 random_items = []
 while inputchoice == 0 :
@@ -91,33 +145,46 @@ while algchoice ==0:
 	print " Option 3: Merge Sort"
 	print " Option 4: Quick Sort"
 	print " Option 5: Heap Sort"
+	print " Option 6: Selection Sort"
+	print " Option 7: TimSort"
 
 	algchoice = input()
 
 	if algchoice == 1:
 		print "\nBubble Sort Selected"
+		sorted_items = bubblesort(random_items,comparisons, swaps)
 	elif algchoice == 2:
 		print "\nInsertion Sort Selected"
+		insertsort(random_items,comparisons, swaps)
 	elif algchoice == 3:
 		print "\nMerge Sort Selected"
+		mergesort(random_items,comparisons, swaps)
 	elif algchoice == 4:
 		print "\nQuick Sort Selected"
+		quicksort(random_items,comparisons, swaps)
 	elif algchoice == 5:
 		print "\nHeap Sort Selected"
+		heapsort(random_items,comparisons, swaps)
+	elif algchoice == 6:
+		print "\nSelection Sort Selected"
+		selectionsort(random_items,comparisons, swaps)
+	elif algchoice == 7:
+		print "\nTimSort Selected"
+		timsort(random_items,comparisons, swaps)
 	else:
 		print "\nInvalid Algorithm Choice"
 		algchoice=0
 
-#TODO Implement Functions
 
-comparisons = 0
-accesses =0
+
+
 
 print '\nUnsorted List:\n ',random_items
-print '\nSorted List:\n ',random_items #Change to Sorted List on Completion
-print '\nNumber of Comparisons ', comparisons
-print 'Number of Array Accesses: ', accesses
-print 'Size of List: ', len(random_items)
+print '\nSorted List:\n ',sorted_items #Change to Sorted List on Completion
+print '\nSize of List: ',len(random_items)
+print '\nNumber of Comparisons: ',comparisons.val()
+print 'Number of Swaps: ',swaps.val()
+
 if outputchoice == 2:
 	thisfile = open(outfile, 'w')
 	for element in random_items: #Change to Sorted List on Completion
@@ -125,7 +192,3 @@ if outputchoice == 2:
 		thisfile.write("\n")
 	thisfile.close()
 	print '\nList written to File\n'
-
-# Comparisons Information
-# Array Accesses Information
-# Sorted List, Make Optional
