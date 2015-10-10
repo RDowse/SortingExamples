@@ -187,7 +187,7 @@ print 'Number of Swaps: ',swaps.val()
 
 if outputchoice == 2:
 	thisfile = open(outfile, 'w')
-	for element in random_items: #Change to Sorted List on Completion
+	for element in sorted_items: #Change to Sorted List on Completion
 		thisfile.write(str(element))
 		thisfile.write("\n")
 	thisfile.close()
